@@ -13,19 +13,19 @@ import com.tokyoprogrammer.aqitracer.model.RestResultJSON;
 public class RestAQIReader implements ItemReader<DataJSON> {
 	private final List<String> apiUrl;
 	private final RestTemplate restTemplate;
-	private List<DataJSON> data; 
+	private List<DataJSON> data;
 	private int index = 0;
-	
+
 	public RestAQIReader(List<String> apiUrl, RestTemplate restTemplate) {
 		this.apiUrl = apiUrl;
 		this.restTemplate = restTemplate;
-		this.data = null; 
+		this.data = null;
 	}
-	
+
 	private boolean isEmpty() {
 		return (data == null || data.isEmpty());
 	}
-	
+
 	// Read every API Result from multiple urls
 	private void prepareResponsesList() {
 		data = new ArrayList<>();
@@ -36,7 +36,7 @@ public class RestAQIReader implements ItemReader<DataJSON> {
 	}
 
 	@Override
-	public DataJSON read() throws Exception {
+	public DataJSON read() {
 		if(isEmpty()) {
 			prepareResponsesList();
 		}

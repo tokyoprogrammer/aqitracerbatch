@@ -12,5 +12,4 @@ public class AqitracerApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
-
 }
