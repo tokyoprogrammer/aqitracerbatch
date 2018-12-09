@@ -3,13 +3,16 @@ package com.tokyoprogrammer.aqitracer.reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.tokyoprogrammer.aqitracer.model.DataJSON;
 import com.tokyoprogrammer.aqitracer.model.RestResultJSON;
 
+@Slf4j
 public class RestAQIReader implements ItemReader<DataJSON> {
 	private final List<String> apiUrl;
 	private final RestTemplate restTemplate;
@@ -23,7 +26,7 @@ public class RestAQIReader implements ItemReader<DataJSON> {
 	}
 
 	private boolean isEmpty() {
-		return (data == null || data.isEmpty());
+		return CollectionUtils.isEmpty(data);
 	}
 
 	// Read every API Result from multiple urls
@@ -31,7 +34,11 @@ public class RestAQIReader implements ItemReader<DataJSON> {
 		data = new ArrayList<>();
 		for(String url : apiUrl) {
 			ResponseEntity<RestResultJSON> response = restTemplate.getForEntity(url, RestResultJSON.class);
-			data.add(response.getBody().getData());
+			try {
+				data.add(response.getBody().getData());
+			} catch (NullPointerException e) {
+			    log.warn("Response has empty body data");
+			}
 		}
 	}
 
