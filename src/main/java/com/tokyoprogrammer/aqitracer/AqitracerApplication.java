@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableBatchProcessing
 public class AqitracerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AqitracerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AqitracerApplication.class, args);
+    }
 }
